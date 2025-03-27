@@ -6,12 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zygoo</title>
     <style>
-        /* --- 全体のレイアウト --- */
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-color: #fff;
+            background: #fff;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -26,38 +25,30 @@
             justify-content: center;
         }
 
-        /* --- ロゴエリア --- */
-
         .logo-block {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            /* 左寄せに見えるように */
             margin-bottom: 50px;
             max-width: 400px;
         }
 
-        /* ロゴ本体 */
         .logo-main {
-            font-family: "Helvetica", "Arial", sans-serif;
+            font-family: Helvetica, Arial, sans-serif;
             font-size: 54px;
             font-weight: bold;
             color: #8ab6d6;
             letter-spacing: 2px;
         }
 
-        /* キャッチコピー（右寄せ） */
         .logo-tagline {
             font-size: 12px;
             color: rgba(0, 0, 0, 0.3);
             align-self: flex-end;
             margin-top: 6px;
-            font-weight: normal;
             letter-spacing: 0.4px;
         }
 
-
-        /* --- 検索フォーム --- */
         .search-container {
             display: flex;
             justify-content: center;
@@ -71,38 +62,33 @@
             overflow: hidden;
         }
 
-        /* 検索エンジンのドロップダウン（左側に配置） */
+        .search-group select,
+        .search-group input[type="text"],
+        .search-group .search-icon-button {
+            border: none;
+            outline: none;
+        }
+
         .search-group select {
             padding: 12px 8px;
             font-size: 16px;
-            border: none;
-            outline: none;
-            background-color: #f8f8f8;
+            background: #f8f8f8;
             border-right: 1px solid #dfe1e5;
         }
 
-        /* 検索文字列入力欄 */
         .search-group input[type="text"] {
             width: 500px;
-            /* 例として500pxに変更 */
             flex-grow: 1;
             padding: 12px 16px;
             font-size: 18px;
-            border: none;
-            outline: none;
         }
 
-        /* 虫眼鏡アイコンボタン（右側に配置） */
         .search-group .search-icon-button {
             padding: 12px 16px;
             background: none;
-            border: none;
-            outline: none;
             cursor: pointer;
         }
 
-
-        /* --- クイックショートカットエリア（8列グリッドレイアウト） --- */
         .shortcuts {
             display: grid;
             grid-template-columns: repeat(8, 1fr);
@@ -111,12 +97,11 @@
             align-items: center;
         }
 
-        /* ショートカットアイテムと追加ボタン */
         .shortcut-item,
         .shortcut-add {
             width: 60px;
             height: 60px;
-            background-color: var(--secondary-bg);
+            background: var(--secondary-bg);
             border-radius: 12px;
             display: flex;
             flex-direction: column;
@@ -129,7 +114,6 @@
             position: relative;
         }
 
-        /* アイコン画像のサイズ調整 */
         .shortcut-item img {
             width: 30px;
             height: 30px;
@@ -137,20 +121,44 @@
             margin-bottom: 2px;
         }
 
-        /* 追加用「＋」ボタン */
+        a.shortcut-item span {
+            display: block;
+            width: 100%;
+            white-space: nowrap;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis; /* 要素内のテキストがはみ出た場合に省略記号を表示 */
+        }
+
         .shortcut-add {
             border: 2px dashed #ccc;
             font-size: 30px;
             color: var(--primary-color);
         }
 
+        .shortcut-item.dragging {
+            opacity: 0.5;
+        }
 
-        /* --- フッター --- */
+        .delete-btn {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            font-size: 14px;
+            padding: 3px 6px;
+            cursor: pointer;
+            display: none;
+            z-index: 1;
+        }
+
         footer {
             width: 100%;
             padding: 10px 0;
             text-align: center;
-            background-color: #f8f9fa;
+            background: #f8f9fa;
             border-top: 1px solid #e0e0e0;
             font-size: 14px;
         }
@@ -161,7 +169,6 @@
             color: #4285F4;
         }
 
-        /* --- モーダル --- */
         .modal {
             position: fixed;
             top: 0;
@@ -201,37 +208,13 @@
         }
 
         .modal-content .save-btn {
-            background-color: #4285F4;
+            background: #4285F4;
             color: #fff;
         }
 
         .modal-content .cancel-btn {
-            background-color: #ccc;
+            background: #ccc;
             color: #333;
-        }
-
-        /* ショートカットアイコンの相対配置 */
-        .shortcut-item {
-            position: relative;
-        }
-
-        .shortcut-item.dragging {
-            opacity: 0.5;
-        }
-
-        /* 削除ボタンのスタイル */
-        .delete-btn {
-            position: absolute;
-            top: 2px;
-            right: 2px;
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid #ccc;
-            border-radius: 50%;
-            font-size: 12px;
-            padding: 2px 5px;
-            cursor: pointer;
-            display: none;
-            z-index: 1;
         }
     </style>
 </head>
@@ -279,7 +262,7 @@
 
     <!-- フッター -->
     <footer>
-        <a href="about.html" id="aboutLink">About</a>
+        <a href="https://github.com/Neustrashimy/zygoo" id="aboutLink">About</a>
         <a href="#" id="dataModalLink">Import/Export</a>
     </footer>
 
@@ -362,7 +345,8 @@
             a.dataset.id = shortcut.id; // 一意の識別子
             a.setAttribute('draggable', 'true');
 
-            // faviconまたはフォールバック画像
+            // リンク画像
+            // faviconの取得は断念。常にフォールバック画像を表示
             const img = document.createElement('img');
             img.src = shortcut.favicon ? shortcut.favicon : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAPYQAAD2EAdWsr3QAAAKfSURBVFhH7ddPiFVlGMfxj6M4pVnoKJpIIUwDMtUMCgYqodiAC42woP8tJAaKihZKtdCFG3UjQkRF+Af/bWSQVookIkl/oEVDmikzFGgbSaKFuEmnzXMuZx7uuffc2eTCL1w49/c77/s+532f9znv4T7/M9Oy0IbZGMJqPIF5uIsb+BXncAF3csMq6gawGJ9gE77BeVzGTUzHQjwdwQ3gK3yKW7mjqfAuxvEOHshmExZgF65ifTY7YQYO4Wv0ZLMGy/AzPshGHabhCD5DVzY74OFYrveyUVCVA1uxEi9jAn14Pt/UghH8HteP4Fu8H8FMotnT9WIYb8fgItE+wnL82+Y3hHWl/v7BG/iiZg45jleyGNk9hmeykdiJLVnEvjr58CiuxBM3o04QVQEsia07adnzEryAEy0KySh2xz7vlOv4E4NlMQfwLM4mrcwAPsar2ajJ2RijQQ5gGS4mraAbx/AmLmWzJhdjjAY5gHn4K2kFW6LWf5+NDriB+WUhB1BVF+A1fJ7F2HLX2iRmwUQeIwfwd8xCM5bGG6/MKnyJD2N52gWxIF5gDXIAv6E/aQVFUSp4DIexOSrfixHEinRfmf4Yo0EO4EKqYmXuYGbp//7YEUXSjkYQK0v3ZNZFWa5kSUxzs1wYwdq4fg6nk1/Qh0VZDO1qRd+TGImClHkJR+P6QIcvJ9iDbVlsRn/MwqykT49pXo7vIgfq0hdPPzsbVezAwSxiDX7Bj3gqmxXMwk/YkI1WdOFkHK3ymg1HQr6V9GY8iFNxnuyY7siHI3goeYNx0GjF4/gB27PRCV2x1a7g9TgntmNOtBmvSOYp0RtFZwx7YwcU3wXz8WSU6oP4I5Zubu6kGXl929GDjVGC+9KHyaU4853B7dzwPvcs/wGbbnxUbJlLKgAAAABJRU5ErkJggg==';
             //img.src = shortcut.favicon ? shortcut.favicon : 'fallback.png';
@@ -371,6 +355,7 @@
             // ショートカット名を表示
             const span = document.createElement('span');
             span.textContent = shortcut.name;
+            a.title = shortcut.name; 
             a.appendChild(span);
 
             // 削除ボタンの作成とイベント設定
@@ -459,9 +444,6 @@
         }
 
 
-
-
-
         // ── ドラッグ＆ドロップ関連のハンドラ ─────────────────────────────
 
         let dragSrcEl = null;
@@ -521,8 +503,6 @@
                 window.open(url, '_self');
             });
 
-
-
             // モーダル（ショートカット追加）の要素
             const modal = document.getElementById('modal');
             const addShortcutBtn = document.getElementById('addShortcutBtn');
@@ -544,6 +524,14 @@
                 const name = document.getElementById('modalLinkName').value.trim();
                 const url = document.getElementById('modalLinkURL').value.trim();
                 if (name && url) {
+
+                    try {
+                        new URL(url);
+                    } catch (e) {
+                        alert("Invalid URI: " + url);
+                        return;
+                    }
+
                     const newShortcut = { id: Date.now(), name, url, favicon: null };
                     let shortcuts = JSON.parse(localStorage.getItem(SHORTCUT_STORAGE_KEY)) || [];
                     shortcuts.push(newShortcut);
@@ -572,7 +560,7 @@
                 };
                 dataTextArea.value = JSON.stringify(combinedData, null, 2);
                 document.getElementById('dataModal').style.display = 'flex';
-                // 例として全選択状態にする処理も入れる場合
+                // 全選択状態にする
                 setTimeout(() => {
                     dataTextArea.focus();
                     dataTextArea.select();
